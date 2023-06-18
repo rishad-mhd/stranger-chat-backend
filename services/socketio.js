@@ -168,7 +168,6 @@ io.sendMessage = ({
 };
 
 io.on("connection", function (socket) {
-
   socket.on("addUser", (userId) => {
     io.users.set(userId, socket.id);
   });
@@ -196,6 +195,9 @@ io.on("connection", function (socket) {
     io.users.delete(userId);
     // }
     // });
+  });
+  socket.on("typing", ({ to, isTyping }) => {
+    io.to(to).emit("typing", { user: to, isTyping });
   });
   // Handle disconnection
   socket.on("disconnect", () => {
