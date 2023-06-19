@@ -197,7 +197,8 @@ io.on("connection", function (socket) {
     // });
   });
   socket.on("typing", ({ to, isTyping }) => {
-    io.to(to).emit("typing", { user: to, isTyping });
+    let reciever = io.getUser(to);
+    io.to(reciever).emit("typing", { user: to, isTyping });
   });
   // Handle disconnection
   socket.on("disconnect", () => {
